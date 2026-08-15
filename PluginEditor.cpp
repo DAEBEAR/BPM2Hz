@@ -33,7 +33,7 @@ TempoConvertAudioProcessorEditor::TempoConvertAudioProcessorEditor (TempoConvert
 
     // --- BPM display ---
     bpmValueLabel.setJustificationType (juce::Justification::centredLeft);
-    bpmValueLabel.setFont (juce::Font (juce::FontOptions (44.0f, juce::Font::bold)));
+    bpmValueLabel.setFont (juce::Font (juce::Font (44.0f, juce::Font::bold)));
     bpmValueLabel.setColour (juce::Label::textColourId, Theme::text);
     addAndMakeVisible (bpmValueLabel);
 
