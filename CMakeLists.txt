@@ -33,8 +33,8 @@ juce_add_plugin(TempoConvert
 juce_generate_juce_header(TempoConvert)
 
 target_sources(TempoConvert PRIVATE
-    Source/PluginProcessor.cpp
-    Source/PluginEditor.cpp
+    PluginProcessor.cpp
+    PluginEditor.cpp
 )
 
 target_compile_definitions(TempoConvert PUBLIC
