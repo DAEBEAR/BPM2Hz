@@ -1,0 +1,32 @@
+name: Build VST3 + AU
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: macos-14
+
+    steps:
+      - name: Checkout progetto
+        uses: actions/checkout@v4
+
+      - name: Configura CMake
+        run: cmake -B build -G Xcode
+
+      - name: Compila (Release)
+        run: cmake --build build --config Release
+
+      - name: Prepara i plugin per il download
+        run: |
+          mkdir -p out/VST3 out/AU
+          cp -R build/TempoConvert_artefacts/Release/VST3/*.vst3 out/VST3/
+          cp -R build/TempoConvert_artefacts/Release/AU/*.component out/AU/
+
+      - name: Carica come artefatto scaricabile
+        uses: actions/upload-artifact@v4
+        with:
+          name: TempoConvert-plugins
+          path: out
