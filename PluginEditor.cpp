@@ -33,12 +33,12 @@ TempoConvertAudioProcessorEditor::TempoConvertAudioProcessorEditor (TempoConvert
 
     // --- BPM display ---
     bpmValueLabel.setJustificationType (juce::Justification::centredLeft);
-    bpmValueLabel.setFont (juce::Font (juce::Font (44.0f, juce::Font::bold)));
+    bpmValueLabel.setFont (juce::Font (44.0f, juce::Font::bold));
     bpmValueLabel.setColour (juce::Label::textColourId, Theme::text);
     addAndMakeVisible (bpmValueLabel);
 
     bpmUnitLabel.setText ("BPM", juce::dontSendNotification);
-    bpmUnitLabel.setFont (juce::Font (juce::FontOptions (13.0f)));
+    bpmUnitLabel.setFont (juce::Font (13.0f));
     bpmUnitLabel.setColour (juce::Label::textColourId, Theme::muted);
     addAndMakeVisible (bpmUnitLabel);
 
@@ -61,7 +61,7 @@ TempoConvertAudioProcessorEditor::TempoConvertAudioProcessorEditor (TempoConvert
     syncAttachment = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment> (
         processor.apvts, TempoConvertAudioProcessor::SYNC_PARAM_ID, syncButton);
 
-    statusLabel.setFont (juce::Font (juce::FontOptions (11.0f)));
+    statusLabel.setFont (juce::Font (11.0f));
     statusLabel.setColour (juce::Label::textColourId, Theme::muted);
     addAndMakeVisible (statusLabel);
 
@@ -69,7 +69,7 @@ TempoConvertAudioProcessorEditor::TempoConvertAudioProcessorEditor (TempoConvert
     auto setupHeader = [this] (juce::Label& l, const juce::String& text)
     {
         l.setText (text, juce::dontSendNotification);
-        l.setFont (juce::Font (juce::FontOptions (10.5f, juce::Font::bold)));
+        l.setFont (juce::Font (10.5f, juce::Font::bold));
         l.setColour (juce::Label::textColourId, Theme::muted);
         l.setJustificationType (juce::Justification::centred);
         addAndMakeVisible (l);
@@ -85,7 +85,7 @@ TempoConvertAudioProcessorEditor::TempoConvertAudioProcessorEditor (TempoConvert
     {
         auto* nameLabel = nameCells.add (new juce::Label());
         nameLabel->setText (nv.name, juce::dontSendNotification);
-        nameLabel->setFont (juce::Font (juce::FontOptions (15.0f, juce::Font::bold)));
+        nameLabel->setFont (juce::Font (15.0f, juce::Font::bold));
         nameLabel->setColour (juce::Label::textColourId, Theme::text);
         addAndMakeVisible (nameLabel);
 
