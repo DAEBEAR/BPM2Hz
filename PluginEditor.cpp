@@ -35,7 +35,7 @@ TempoConvertAudioProcessorEditor::TempoConvertAudioProcessorEditor (TempoConvert
     // --- brand ---
     logoImage = juce::ImageCache::getFromMemory (BinaryData::daebaer_logo_png, BinaryData::daebaer_logo_pngSize);
 
-    brandLabel.setText (juce::String (juce::CharPointer_UTF8 ("D\xc3\x86B\xc3\x86R Plugins")), juce::dontSendNotification);
+    brandLabel.setText (juce::String ("DÆBÆR Plugins"), juce::dontSendNotification);
     brandLabel.setFont (juce::Font (11.0f, juce::Font::bold));
     brandLabel.setColour (juce::Label::textColourId, Theme::amberDim);
     brandLabel.setJustificationType (juce::Justification::centredLeft);

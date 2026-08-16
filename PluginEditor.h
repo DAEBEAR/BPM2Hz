@@ -40,5 +40,10 @@ private:
     double lastDisplayedBpm = -1.0;
     double lastBeatPhaseOrigin = 0.0;
 
+    // UI elements
+    juce::Image logoImage;
+    juce::Label brandLabel;
+    juce::Rectangle<int> logoBounds;
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TempoConvertAudioProcessorEditor)
 };
