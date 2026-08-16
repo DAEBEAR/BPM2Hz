@@ -1,0 +1,32 @@
+name: Build VST3 + AU
+
+on:
+  workflow_dispatch:      # bottone "Run workflow" su GitHub
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: macos-14     # runner Apple Silicon con Xcode preinstallato
+
+    steps:
+      - name: Checkout progetto
+        uses: actions/checkout@v4
+
+      - name: Configura CMake
+        run: cmake -B build -G Xcode
+
+      - name: Compila (Release)
+        run: cmake --build build --config Release
+
+      - name: Prepara i plugin per il download
+        run: |
+          mkdir -p out/VST3 out/AU
+          cp -R build/BPM2Hz_artefacts/Release/VST3/*.vst3 out/VST3/
+          cp -R build/BPM2Hz_artefacts/Release/AU/*.component out/AU/
+
+      - name: Carica come artefatto scaricabile
+        uses: actions/upload-artifact@v4
+        with:
+          name: BPM2Hz-plugins
+          path: out

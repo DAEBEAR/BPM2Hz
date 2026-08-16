@@ -1,12 +1,13 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
+#include "BinaryData.h"
 
 namespace Theme
 {
-    const juce::Colour bg        (0xff141317);
-    const juce::Colour panel     (0xff1b1a20);
-    const juce::Colour panel2    (0xff201f26);
-    const juce::Colour line      (0xff302f38);
+    const juce::Colour bg        (0xff000000);
+    const juce::Colour panel     (0xff0d0d0f);
+    const juce::Colour panel2    (0xff141416);
+    const juce::Colour line      (0xff242426);
     const juce::Colour amber     (0xffffb238);
     const juce::Colour amberDim  (0xff8a611f);
     const juce::Colour cyan      (0xff5fe0c9);
@@ -30,6 +31,15 @@ TempoConvertAudioProcessorEditor::TempoConvertAudioProcessorEditor (TempoConvert
     : juce::AudioProcessorEditor (&p), processor (p)
 {
     setLookAndFeel (nullptr); // usa il L&F di default, coloriamo i singoli componenti
+
+    // --- brand ---
+    logoImage = juce::ImageCache::getFromMemory (BinaryData::daebaer_logo_png, BinaryData::daebaer_logo_pngSize);
+
+    brandLabel.setText (juce::String (juce::CharPointer_UTF8 ("D\xc3\x86B\xc3\x86R Plugins")), juce::dontSendNotification);
+    brandLabel.setFont (juce::Font (11.0f, juce::Font::bold));
+    brandLabel.setColour (juce::Label::textColourId, Theme::amberDim);
+    brandLabel.setJustificationType (juce::Justification::centredLeft);
+    addAndMakeVisible (brandLabel);
 
     // --- BPM display ---
     bpmValueLabel.setJustificationType (juce::Justification::centredLeft);
@@ -99,7 +109,7 @@ TempoConvertAudioProcessorEditor::TempoConvertAudioProcessorEditor (TempoConvert
         }
     }
 
-    setSize (560, 480);
+    setSize (560, 514);
     rebuildTable (processor.getDisplayBpm());
     startTimerHz (20);
 }
@@ -166,7 +176,7 @@ void TempoConvertAudioProcessorEditor::paint (juce::Graphics& g)
     g.fillAll (Theme::bg);
 
     // pannello hero
-    auto heroBounds = getLocalBounds().removeFromTop (120).reduced (16, 12).toFloat();
+    auto heroBounds = getLocalBounds().removeFromTop (154).reduced (16, 12).toFloat();
     g.setColour (Theme::panel);
     g.fillRoundedRectangle (heroBounds, 14.0f);
     g.setColour (Theme::line);
@@ -183,8 +193,12 @@ void TempoConvertAudioProcessorEditor::paint (juce::Graphics& g)
     g.setColour (Theme::amber.withAlpha (alpha));
     g.fillEllipse (juce::Rectangle<float> (radius * 2.0f, radius * 2.0f).withCentre (dotCentre));
 
+    // logo
+    if (logoImage.isValid() && ! logoBounds.isEmpty())
+        g.drawImage (logoImage, logoBounds.toFloat(), juce::RectanglePlacement::centred);
+
     // pannello tabella
-    auto tableBounds = getLocalBounds().withTrimmedTop (132).reduced (16, 0).toFloat();
+    auto tableBounds = getLocalBounds().withTrimmedTop (166).reduced (16, 0).toFloat();
     tableBounds.removeFromBottom (12);
     g.setColour (Theme::panel);
     g.fillRoundedRectangle (tableBounds, 14.0f);
@@ -196,8 +210,14 @@ void TempoConvertAudioProcessorEditor::resized()
 {
     auto area = getLocalBounds();
 
-    auto hero = area.removeFromTop (120).reduced (16, 12);
+    auto hero = area.removeFromTop (154).reduced (16, 12);
     hero.removeFromLeft (44); // spazio per il LED disegnato in paint()
+
+    auto brandRow = hero.removeFromTop (34);
+    auto brandBlock = brandRow.removeFromRight (200);
+    logoBounds = brandBlock.removeFromLeft (34).reduced (2);
+    brandBlock.removeFromLeft (8);
+    brandLabel.setBounds (brandBlock);
 
     auto bpmRow = hero.removeFromTop (56);
     bpmValueLabel.setBounds (bpmRow.removeFromLeft (140));
